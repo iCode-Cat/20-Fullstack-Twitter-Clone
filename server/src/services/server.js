@@ -3,6 +3,7 @@ const auth = require('./api/routes/auth');
 const passport = require('passport');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const cors = require('cors');
 
 const app = express();
 
@@ -12,6 +13,7 @@ module.exports = {
 
 app.use(express.json());
 app.use(express.static('public'));
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 // Mongo Session
 const store = new MongoDBStore({
