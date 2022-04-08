@@ -3,7 +3,7 @@ import { variables } from '../variables';
 
 const Auth = () => {
   const authHandler = () => {
-    window.location.href = variables.auth_href;
+    window.location.href = variables.origin + '/api/auth';
   };
 
   return (

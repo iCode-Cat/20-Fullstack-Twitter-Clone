@@ -1,26 +1,59 @@
 import './App.css';
-import * as React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Auth from './Pages/Auth';
-import axios from 'axios';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchProfile, fetchUserStatus } from './redux/userSlice';
+import { Home } from './Pages/Home';
+import { useAppDispatch } from './redux/hooks';
+import { useState } from './hooks/useReduxTools';
+import Layout from './Components/layout';
 
 function App() {
-  const test = async () => {
-    const req = await axios.get('http://localhost:3333/api/auth/is_auth', {
-      withCredentials: true,
-    });
-    console.log(req);
-  };
+  const dispatch = useAppDispatch();
+  const { user } = useState();
 
   useEffect(() => {
-    test();
+    dispatch(fetchUserStatus());
+    dispatch(fetchProfile());
   }, []);
 
   return (
     <div>
       <Routes>
-        <Route path='/auth' element={<Auth />} />
+        {!user.isAuth && <Route path='/auth' element={<Auth />} />}
+        {user.isAuth && (
+          <>
+            <Route
+              path='/home'
+              element={
+                <Layout>
+                  <Home />
+                </Layout>
+              }
+            />
+            <Route
+              path='/explore'
+              element={
+                <Layout>
+                  <Home />
+                </Layout>
+              }
+            />
+            <Route
+              path='/bookmarks'
+              element={
+                <Layout>
+                  <Home />
+                </Layout>
+              }
+            />
+          </>
+        )}
+        <Route
+          path='*'
+          element={<Navigate to={user.isAuth ? '/home' : 'auth'} />}
+        />
       </Routes>
     </div>
   );

@@ -7,6 +7,7 @@ const {
 } = require('../controller/authController');
 const Router = express.Router();
 const { isAuth } = require('../../middleware/checkAuth');
+const { createOrGetProfile } = require('../controller/profileController');
 
 Router.get('/logged', isAuth, authRegisterPost);
 
@@ -24,5 +25,8 @@ Router.get(
     res.redirect(process.env.REDIRECT_AUTH);
   }
 );
+
+// User Profile
+Router.get('/profile', isAuth, createOrGetProfile);
 
 module.exports = Router;

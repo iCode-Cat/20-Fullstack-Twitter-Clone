@@ -1,5 +1,5 @@
 const variables = {
-  auth_href: 'http://localhost:3333/api/auth',
+  origin: 'http://localhost:3333',
 };
 
 export { variables };
