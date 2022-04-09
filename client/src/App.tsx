@@ -21,39 +21,46 @@ function App() {
   return (
     <div>
       <Routes>
-        {!user.isAuth && <Route path='/auth' element={<Auth />} />}
-        {user.isAuth && (
+        {user?.isAuth === null ? (
+          ''
+        ) : (
           <>
-            <Route
-              path='/home'
-              element={
-                <Layout>
-                  <Home />
-                </Layout>
-              }
-            />
-            <Route
-              path='/explore'
-              element={
-                <Layout>
-                  <Home />
-                </Layout>
-              }
-            />
-            <Route
-              path='/bookmarks'
-              element={
-                <Layout>
-                  <Home />
-                </Layout>
-              }
-            />
+            {!user?.isAuth && (
+              <>
+                <Route path='/auth' element={<Auth />} />
+                <Route path='*' element={<Navigate to='/auth' />} />
+              </>
+            )}
+            {user.isAuth && (
+              <>
+                <Route
+                  path='/home'
+                  element={
+                    <Layout>
+                      <Home />
+                    </Layout>
+                  }
+                />
+                <Route
+                  path='/explore'
+                  element={
+                    <Layout>
+                      <Home />
+                    </Layout>
+                  }
+                />
+                <Route
+                  path='/bookmarks'
+                  element={
+                    <Layout>
+                      <Home />
+                    </Layout>
+                  }
+                />
+              </>
+            )}
           </>
         )}
-        <Route
-          path='*'
-          element={<Navigate to={user.isAuth ? '/home' : 'auth'} />}
-        />
       </Routes>
     </div>
   );

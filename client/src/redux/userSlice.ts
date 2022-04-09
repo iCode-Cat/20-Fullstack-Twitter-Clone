@@ -3,13 +3,13 @@ import axios from 'axios';
 import { variables } from '../variables';
 
 export interface UserState {
-  isAuth: boolean;
+  isAuth: boolean | null;
   username: string;
   profile: any;
 }
 
 const initialState: UserState = {
-  isAuth: false,
+  isAuth: null,
   username: '',
   profile: {},
 };
@@ -49,6 +49,8 @@ export const userSlice = createSlice({
         state.username = action.payload?.data?.msg?.username;
         return;
       }
+    });
+    builder.addCase(fetchUserStatus.rejected, (state, action) => {
       state.isAuth = false;
     });
     builder.addCase(fetchProfile.fulfilled, (state, action) => {
