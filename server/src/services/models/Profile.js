@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const profileSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+  username: { type: String, default: null },
   firstName: { type: String, default: null },
   lastName: { type: String, default: null },
   profilePic: {
@@ -16,6 +17,14 @@ const profileSchema = new mongoose.Schema({
   description: {
     type: String,
     default: null,
+  },
+  following: {
+    type: Number,
+    default: 0,
+  },
+  followers: {
+    type: Number,
+    default: 0,
   },
 });
 

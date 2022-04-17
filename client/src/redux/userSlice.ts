@@ -25,13 +25,24 @@ export const fetchUserStatus = createAsyncThunk(
   }
 );
 
-// Get user profile
+// Get user ( owner ) profile
 export const fetchProfile = createAsyncThunk('users/fetchProfile', async () => {
   const response = await axios(variables.origin + '/api/auth/profile', {
     withCredentials: true,
   });
   return response;
 });
+
+// Get user ( someone else ) profile
+export const fetchProfileSomeOne = createAsyncThunk(
+  'users/fetchProfileSomeOne',
+  async (id: string) => {
+    const response = await axios(variables.origin + '/api/auth/profile/' + id, {
+      withCredentials: true,
+    });
+    return response;
+  }
+);
 
 export const userSlice = createSlice({
   name: 'counter',
@@ -55,6 +66,11 @@ export const userSlice = createSlice({
     });
     builder.addCase(fetchProfile.fulfilled, (state, action) => {
       state.profile = action.payload?.data;
+    });
+
+    builder.addCase(fetchProfileSomeOne.fulfilled, (state, action) => {
+      state.profile = action.payload?.data;
+      console.log(action.payload);
     });
   },
 });

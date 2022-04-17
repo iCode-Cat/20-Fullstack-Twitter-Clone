@@ -14,16 +14,16 @@ module.exports = function (passport) {
       },
 
       async (accessToken, refreshToken, profile, done) => {
-        console.log(profile);
         const userObject = new User({
           username: profile.id,
-          img: profile.photos.value,
+          profilePic: profile.photos[0].value,
         });
         try {
           const user = await User.findOne({ id: profile.id });
           if (user) {
             return done(null, user);
           }
+          console.log(userObject);
           await userObject.save();
           return done(null, userObject);
         } catch (error) {

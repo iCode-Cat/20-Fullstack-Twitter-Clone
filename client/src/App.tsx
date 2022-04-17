@@ -8,6 +8,7 @@ import { Home } from './Pages/Home';
 import { useAppDispatch } from './redux/hooks';
 import { useState } from './hooks/useReduxTools';
 import Layout from './Components/layout';
+import InitialPopup from './Components/InitialPopup';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -20,6 +21,7 @@ function App() {
 
   return (
     <div>
+     {user?.isAuth && !user?.profile?.username && user?.profile?.userId && <InitialPopup/> }
       <Routes>
         {user?.isAuth === null ? (
           ''
@@ -31,7 +33,7 @@ function App() {
                 <Route path='*' element={<Navigate to='/auth' />} />
               </>
             )}
-            {user.isAuth && (
+            {user.isAuth && user?.profile?.userId &&  (
               <>
                 <Route
                   path='/home'

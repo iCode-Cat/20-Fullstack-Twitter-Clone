@@ -4,16 +4,24 @@ import FollowCounter from './FollowCounter';
 import Name from './Name';
 import ProfilePic from './ProfilePic';
 
-const Profile = () => {
-  const state = useState();
-  const { user } = state;
+interface IProfile {
+  name: string;
+  profilePic: string;
+  followers: number;
+  following: number;
+}
 
+interface IProps {
+  profile: IProfile;
+}
+
+const Profile: React.FC<IProps> = ({ profile }) => {
   return (
     <div
       style={{ boxShadow: '0px 2px 4px 0px #0000000D' }}
       className='max-w-[1073px] w-[100%] h-[246px] md:h-[163px]  m-[0_auto] bg-[#FFFFFF] grid justify-center justify-items-center relative rounded-[12px] md:grid-cols-[200px_1fr] md:justify-start md:justify-items-start p-[0_2.4rem_2.3rem_2.8rem] md:p-[1.9rem_2.4rem_2.3rem_0rem]'
     >
-      <ProfilePic src={user?.profile?.profilePic} />
+      <ProfilePic src={profile?.profilePic} />
       <div className='mt-[44px] md:mt-[0] text-center  md:col-[2/3] grid justify-items-center md:justify-items-start md:grid-cols-[auto_1fr] w-[100%] md:grid-rows-[0fr_0fr]  md:gap-[0_2.8rem]'>
         <Name text={'Devran Boyaci'} />
         <div className='grid justify-items-center md:justify-items-start md:grid-cols-[1fr_1fr] w-[100%]'>

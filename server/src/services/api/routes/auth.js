@@ -7,7 +7,11 @@ const {
 } = require('../controller/authController');
 const Router = express.Router();
 const { isAuth } = require('../../middleware/checkAuth');
-const { createOrGetProfile } = require('../controller/profileController');
+const {
+  createOrGetProfile,
+  getUserProfile,
+  updateProfile,
+} = require('../controller/profileController');
 
 Router.get('/logged', isAuth, authRegisterPost);
 
@@ -20,13 +24,16 @@ Router.get('/is_auth', isAuthenticated);
 Router.get(
   '/callback',
   passport.authenticate('google', { failureRedirect: '/login', session: true }),
-  function (req, res) {
+  function(req, res) {
     // Successful authentication, redirect home.
     res.redirect(process.env.REDIRECT_AUTH);
-  }
+  },
 );
 
 // User Profile
 Router.get('/profile', isAuth, createOrGetProfile);
+Router.put('/profile', isAuth, updateProfile);
+Router.get('/profile/:id', isAuth, getUserProfile);
+
 
 module.exports = Router;
