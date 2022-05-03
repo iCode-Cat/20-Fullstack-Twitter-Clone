@@ -6,13 +6,14 @@ import { useDispatch } from 'react-redux';
 import { fetchProfile, fetchUserStatus } from './redux/userSlice';
 import { Home } from './Pages/Home';
 import { useAppDispatch } from './redux/hooks';
-import { useState } from './hooks/useReduxTools';
+import { useHookState } from './hooks/useReduxTools';
 import Layout from './Components/layout';
 import InitialPopup from './Components/InitialPopup';
+import Explore from './Pages/Explore';
 
 function App() {
   const dispatch = useAppDispatch();
-  const { user } = useState();
+  const { user } = useHookState();
 
   useEffect(() => {
     dispatch(fetchUserStatus());
@@ -21,7 +22,9 @@ function App() {
 
   return (
     <div>
-     {user?.isAuth && !user?.profile?.username && user?.profile?.userId && <InitialPopup/> }
+      {user?.isAuth && !user?.profile?.username && user?.profile?.userId && (
+        <InitialPopup />
+      )}
       <Routes>
         {user?.isAuth === null ? (
           ''
@@ -33,8 +36,16 @@ function App() {
                 <Route path='*' element={<Navigate to='/auth' />} />
               </>
             )}
-            {user.isAuth && user?.profile?.userId &&  (
+            {user.isAuth && user?.profile?.userId && (
               <>
+                <Route
+                  path='/profile/:id'
+                  element={
+                    <Layout>
+                      <Home />
+                    </Layout>
+                  }
+                />
                 <Route
                   path='/home'
                   element={
@@ -47,7 +58,7 @@ function App() {
                   path='/explore'
                   element={
                     <Layout>
-                      <Home />
+                      <Explore />
                     </Layout>
                   }
                 />

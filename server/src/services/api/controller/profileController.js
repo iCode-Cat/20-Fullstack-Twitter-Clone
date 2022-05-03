@@ -1,9 +1,11 @@
 const Profile = require('../../models/Profile');
 
+// @router /api/auth/profile/:id
+// @desc GET User Profile
 module.exports.createOrGetProfile = async (req, res) => {
   try {
-    const findUser = await Profile.findOne({ user: req.user.id });
-
+    const findUser = await Profile.findOne({ userId: req.user.id });
+    console.log(req.user.id);
     // Create user, find and return user
     if (!findUser) {
       await Profile.create({
@@ -12,8 +14,8 @@ module.exports.createOrGetProfile = async (req, res) => {
       });
       res.status(200).json(
         await Profile.findOne({
-          user: req.user.id,
-        }),
+          userId: req.user.id,
+        })
       );
     }
 
@@ -28,10 +30,10 @@ module.exports.createOrGetProfile = async (req, res) => {
 
 module.exports.getUserProfile = async (req, res) => {
   const { id } = req.params;
+  console.log(id);
 
   try {
     const profile = await Profile.findOne({ userId: id });
-    console.log(profile);
     if (!profile) {
       return res.status(404).json({ msg: 'Profile not found' });
     }
@@ -43,7 +45,7 @@ module.exports.getUserProfile = async (req, res) => {
 };
 
 module.exports.updateProfile = async (req, res) => {
-  const {username, firstName, lastName, description} = req.body;
+  const { username, firstName, lastName, description } = req.body;
 
   try {
     const profile = await Profile.findOne({ userId: req.user.id });

@@ -1,6 +1,6 @@
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
 
-export const useState = () => {
+export const useHookState = () => {
   const state = useAppSelector((state) => state);
   return state;
 };

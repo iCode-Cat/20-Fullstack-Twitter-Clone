@@ -1,8 +1,8 @@
 import React from 'react';
-import { useState } from '../hooks/useReduxTools';
+import { useHookState } from '../hooks/useReduxTools';
 
 const Cover = () => {
-  const state = useState();
+  const state = useHookState();
   const { user } = state;
 
   return (

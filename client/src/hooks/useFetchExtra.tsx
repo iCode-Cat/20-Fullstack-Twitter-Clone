@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { variables } from '../variables';
+import { useEffect } from 'react';
 
 interface IProps {
   route: string;
@@ -8,14 +9,15 @@ interface IProps {
   postData?: any;
 }
 
-const useFetch = ({ route, method, postData }: IProps): any => {
+const useFetchExtra = ({ route, method, postData }: IProps): any => {
   // language=TypeScript
   const [data, setData] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState('');
 
-  const fetchData = () => {
+  useEffect(() => {
     setLoading(true);
+    setData('');
     axios({
       method: method,
       url: variables.origin + route,
@@ -33,12 +35,9 @@ const useFetch = ({ route, method, postData }: IProps): any => {
         setError(err);
         setLoading(false);
       });
-    return [data, loading, error];
-  };
+  }, [route]);
 
-  return {
-    fetchData,
-  };
+  return [data, loading, error];
 };
 
-export default useFetch;
+export default useFetchExtra;

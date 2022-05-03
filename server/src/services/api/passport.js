@@ -19,11 +19,11 @@ module.exports = function (passport) {
           profilePic: profile.photos[0].value,
         });
         try {
-          const user = await User.findOne({ id: profile.id });
+          const user = await User.findOne({ username: profile.id });
+          console.log(profile.id);
           if (user) {
             return done(null, user);
           }
-          console.log(userObject);
           await userObject.save();
           return done(null, userObject);
         } catch (error) {

@@ -1,5 +1,6 @@
 const express = require('express');
 const auth = require('./api/routes/auth');
+const profile = require('./api/routes/profile');
 const passport = require('passport');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
@@ -43,6 +44,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 // API
 app.use('/api/auth', auth);
+app.use('/api/auth', profile);
 
 async function makeServer() {
   const PORT = process.env.PORT || 3333;

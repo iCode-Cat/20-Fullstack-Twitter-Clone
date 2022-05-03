@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { useState } from '../hooks/useReduxTools';
+import { useHookState } from '../hooks/useReduxTools';
 const Header = () => {
   const lists = ['Home', 'Explore', 'Bookmarks'];
-  const state = useState();
+  const state = useHookState();
 
   return (
     <header className='flex justify-between items-center p-[1.9rem_2.1rem] md:p-[1.9rem_7.2rem]'>
@@ -25,7 +25,7 @@ const Header = () => {
           className='overflow-hidden w-[36px] h-[36px] bg-slate-700 rounded-[8px]'
         ></div>
         <p className='hidden md:block text-[1.2rem] font-[700]'>
-          Devran Boyaci
+          {state.user?.profile?.username}
         </p>
       </div>
     </header>

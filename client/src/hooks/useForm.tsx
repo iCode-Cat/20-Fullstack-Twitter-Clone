@@ -1,27 +1,29 @@
-import React from 'react'
+import React from 'react';
 
 const useForm = () => {
-    const [state, setState] = React.useState({
-        username: '',
-        description:'',
-        firstName: '',
-        lastName: '',
+  const [state, setState] = React.useState({
+    username: '',
+    description: '',
+    firstName: '',
+    lastName: '',
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setState({
+      ...state,
+      [name]: value,
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setState({
-            ...state,
-            [name]: value,
-        });
+    return;
+  };
 
-        return;
-    };
+  return {
+    state,
+    handleChange,
+  };
+};
 
-    return {
-        state,
-        handleChange,
-    };
-}
-
-export default useForm
+export default useForm;

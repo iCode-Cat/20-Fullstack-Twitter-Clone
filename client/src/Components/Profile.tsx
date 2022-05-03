@@ -1,4 +1,5 @@
-import { useState } from '../hooks/useReduxTools';
+import { useEffect, useState } from 'react';
+import { useHookState as userState } from '../hooks/useReduxTools';
 import Button from './Button';
 import FollowCounter from './FollowCounter';
 import Name from './Name';
@@ -9,6 +10,13 @@ interface IProfile {
   profilePic: string;
   followers: number;
   following: number;
+  description: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+  userId: string;
+  __v: number;
+  _id: string;
 }
 
 interface IProps {
@@ -16,6 +24,16 @@ interface IProps {
 }
 
 const Profile: React.FC<IProps> = ({ profile }) => {
+  const { user } = userState();
+  const [owner, setOwner] = useState(false);
+  console.log(user, profile);
+
+  useEffect(() => {
+    if (user?.profile?.userId === profile.userId) {
+      setOwner(true);
+    }
+  }, [profile]);
+
   return (
     <div
       style={{ boxShadow: '0px 2px 4px 0px #0000000D' }}
@@ -23,22 +41,25 @@ const Profile: React.FC<IProps> = ({ profile }) => {
     >
       <ProfilePic src={profile?.profilePic} />
       <div className='mt-[44px] md:mt-[0] text-center  md:col-[2/3] grid justify-items-center md:justify-items-start md:grid-cols-[auto_1fr] w-[100%] md:grid-rows-[0fr_0fr]  md:gap-[0_2.8rem]'>
-        <Name text={'Devran Boyaci'} />
+        <Name text={profile?.firstName + ' ' + profile?.lastName} />
         <div className='grid justify-items-center md:justify-items-start md:grid-cols-[1fr_1fr] w-[100%]'>
           <div className='grid grid-flow-col gap-[4rem] leading-[18px] mt-[0.4rem]  font-[Poppins] font-[600] text-[1.2rem] place-content-center'>
-            <FollowCounter number={'2,569'} text='Following' />
-            <FollowCounter number={'1,869'} text='Followers' />
+            <FollowCounter number={profile?.following} text='Following' />
+            <FollowCounter number={profile?.followers} text='Followers' />
           </div>
           <p className='text-[1.8rem] leading-[24px] text-[#828282] md:col-[1/3] md:hidden max-w-[427px]'>
-            Photographer & Filmmaker based in Copenhagen, Denmark ✵ 🇩🇰
+            {profile?.description}
           </p>
-          <div className='md:col-[3/4] mt-[2.5rem] md:mt-[0rem]  '>
+          <div
+            className={`md:col-[3/4] mt-[2.5rem] md:mt-[0rem] ${
+              owner ? 'hidden' : ''
+            }`}
+          >
             <Button text='Follow' />
           </div>
         </div>
         <p className='md:mt-[2.2rem] text-[1.8rem] leading-[24px] text-[#828282] md:col-[1/3] hidden md:block max-w-[427px] text-left'>
-          Photographer & Filmmaker based in Copenhagen, Denmark ✵ 🇩🇰 n, Denmark
-          ✵ 🇩🇰
+          {profile?.description}
         </p>
       </div>
     </div>
