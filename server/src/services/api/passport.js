@@ -20,7 +20,7 @@ module.exports = function (passport) {
         });
         try {
           const user = await User.findOne({ username: profile.id });
-          console.log(profile.id);
+
           if (user) {
             return done(null, user);
           }

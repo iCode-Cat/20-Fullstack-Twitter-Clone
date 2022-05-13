@@ -5,9 +5,8 @@ export const useHookState = () => {
   return state;
 };
 
-export const useDispatchHook = (f: () => void) => {
+export const useDispatchHook = () => {
   const dispatch = useAppDispatch();
-  dispatch(f);
 
-  return;
+  return { dispatch };
 };
