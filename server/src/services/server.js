@@ -2,6 +2,7 @@ const express = require('express');
 const auth = require('./api/routes/auth');
 const profile = require('./api/routes/profile');
 const tweet = require('./api/routes/tweet');
+const flow = require('./api/routes/flow');
 const passport = require('passport');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
@@ -47,6 +48,7 @@ app.use(passport.session());
 app.use('/api/auth', auth);
 app.use('/api/auth', profile);
 app.use('/api', tweet);
+app.use('/api', flow);
 
 async function makeServer() {
   const PORT = process.env.PORT || 3333;

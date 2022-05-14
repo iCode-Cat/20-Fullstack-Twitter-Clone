@@ -13,11 +13,22 @@ interface ITweet {
   privacy: string;
 }
 
+interface IFlow {
+  type: 'like' | 'retweet' | 'comment' | 'reply' | 'share';
+  tweet: string;
+  userId: string;
+}
+
 const TweetCreate = () => {
   const state = useHookState();
   const { dispatch } = useDispatchHook();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [flow, setFlow] = useState<IFlow>({
+    type: 'like',
+    tweet: '',
+    userId: '',
+  });
   const [tweet, setTweet] = useState<ITweet>({
     content: '',
     image: '',
@@ -25,7 +36,7 @@ const TweetCreate = () => {
   });
   const { user } = state;
   const { fetchData } = useFetch({
-    route: variables.origin + '/api/tweet/create',
+    route: variables.origin + '/api/flow/create',
     method: 'post',
     postData: tweet,
   });
@@ -42,8 +53,6 @@ const TweetCreate = () => {
       );
       setLoading(false);
       // On success post, push new tweet to redux
-      console.log({ ...user });
-
       dispatch(addTweet({ ...post.data, userId: { ...user.profile } }));
     } catch (error) {
       setError(true);

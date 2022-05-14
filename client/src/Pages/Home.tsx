@@ -12,7 +12,7 @@ export const Home = () => {
   // const [someone, setSomeone] = useState('')
 
   const [data, loading, error] = useFetchExtra({
-    route: `/api/auth/profile/${id || user?.profile?.userId}`,
+    route: `/api/auth/profile/${id || user?.profile?.username}`,
     method: 'get',
   });
 

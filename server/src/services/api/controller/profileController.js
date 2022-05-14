@@ -1,7 +1,5 @@
 const Profile = require('../../models/Profile');
 
-// @router /api/auth/profile/:id
-// @desc GET User Profile
 module.exports.createOrGetProfile = async (req, res) => {
   try {
     const findUser = await Profile.findOne({ userId: req.user.id });
@@ -28,12 +26,14 @@ module.exports.createOrGetProfile = async (req, res) => {
   }
 };
 
+// @router /api/auth/profile/:id ( helloKitty )
+// @desc GET User Profile
 module.exports.getUserProfile = async (req, res) => {
   const { id } = req.params;
   console.log(id);
 
   try {
-    const profile = await Profile.findOne({ userId: id });
+    const profile = await Profile.findOne({ username: id });
     if (!profile) {
       return res.status(404).json({ msg: 'Profile not found' });
     }
