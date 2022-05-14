@@ -1,5 +1,6 @@
 import React from 'react';
 import ProfileLabel from './ProfileLabel';
+import moment from 'moment';
 
 interface IProps {
   picture?: string;
@@ -7,6 +8,7 @@ interface IProps {
   profilePicture?: string;
   firstName?: string;
   lastName?: string;
+  date?: Date;
 }
 
 const ShowTweet: React.FC<IProps> = ({
@@ -15,13 +17,14 @@ const ShowTweet: React.FC<IProps> = ({
   profilePicture,
   firstName,
   lastName,
+  date,
 }) => {
   return (
     <div className='bg-[#fff] p-[2rem_2.1rem] rounded-[8px]'>
       <ProfileLabel
         picture={profilePicture}
-        title={firstName || 'unnamed'}
-        subtitle={lastName}
+        title={`${firstName} ${lastName}`}
+        subtitle={moment(date).format('DD MMMM YYYY \\at\\ HH:mm')}
       />
       <p className='mt-[2rem] text-[1.6rem] font-[400] leading-[21px]'>
         {content}

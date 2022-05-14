@@ -5,7 +5,7 @@ import axios from 'axios';
 interface ITweetObject {
   content: string;
   _id: string;
-  createdAt: string; // ISO String
+  createdAt: Date; // ISO String
   userId: {
     profilePic: string;
     firstName: string;

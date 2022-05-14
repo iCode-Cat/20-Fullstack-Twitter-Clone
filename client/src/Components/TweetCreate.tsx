@@ -5,6 +5,7 @@ import useFetch from '../hooks/useFetch';
 import axios from 'axios';
 import { variables } from '../variables';
 import { addTweet } from '../redux/tweetSlice';
+import { log } from 'console';
 
 interface ITweet {
   content: string;
@@ -41,7 +42,9 @@ const TweetCreate = () => {
       );
       setLoading(false);
       // On success post, push new tweet to redux
-      dispatch(addTweet(post.data));
+      console.log({ ...user });
+
+      dispatch(addTweet({ ...post.data, userId: { ...user.profile } }));
     } catch (error) {
       setError(true);
       setLoading(false);
